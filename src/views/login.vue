@@ -25,8 +25,8 @@
         gsStr:"第鬼医院",
         logining: false,
         ruleForm2: {
-          account: 'admin',
-          checkPass: '123456'
+          account: '000000',
+          checkPass: '000000'
         },
         rules2: {
           account: [
@@ -50,9 +50,12 @@
             var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
             this.$http.post(g.debugUrl+"login",loginParams).then((res)=>{
               if(res.body.d){
-                console.log(res.body.sid)
+                // console.log(res.body.sid)
+                console.log("login.vue:"+g.login)
+                g.login = true
                 setCookie('connect.sid',res.body.sid)
-                this.$router.push({name:'未付款记录'})
+                this.$router.push({name:'就诊列表'})
+                // console.log(g.login)
               } else{
                   console.log("dkdkkdkdkjk")
               }   
@@ -73,17 +76,14 @@
       var gsStr = this.$data.gsStr
       console.log("什么医院："+gs)
       switch(gs){
-        case "1":
-          this.$data.gsStr = "第一医院";
+        case "fizzo":
+          this.$data.gsStr = "fizzo 医院";
           break;
-        case "2":
-          this.$data.gsStr= "第二医院";
-          break;
-        case "3":
+        case "yukiko":
           this.$data.gsStr="yukiko 医院";
           break;
         default:
-          this.$data.gsStr="fizzo 医院";
+          this.$router.push({name:'notfound'})
           break;
       }
 

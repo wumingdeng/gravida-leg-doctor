@@ -90,7 +90,9 @@ export default {
     
    mounted (){
       var patient_no = this.$route.params.no
+      var gs = this.$route.params.gs
       console.log(patient_no)
+      console.log(gs)
       this.getUsers(patient_no)
    },
    created (){

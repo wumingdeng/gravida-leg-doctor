@@ -5,5 +5,5 @@
 export default {
   r:{},
   login:false,
-  debugUrl:'http://192.168.18.165:8072/api/'
+  debugUrl:'http://192.168.0.103:8072/api/'
 }
