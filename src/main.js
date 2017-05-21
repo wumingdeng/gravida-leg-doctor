@@ -22,6 +22,12 @@ const router = new VueRouter({
   routes: routes,
 });
 
+router.beforeEach((to,from,next)=>{
+  window.scrollTo(0,0)
+  console.log("1234")
+  next()
+})
+
 new Vue({
   el: '#app',
   router,	

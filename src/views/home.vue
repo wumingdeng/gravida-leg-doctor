@@ -19,13 +19,6 @@
         <el-col :span="24" class="main">
             <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
                 <el-menu default-active="/" theme="dark" :router="true">
-                <el-submenu index="1">
-                    <template slot="title">订单管理</template>
-                    <el-menu-item index="/">未付款<div v-if="s1_cout>0" class="notice">{{s1_cout}}</div></el-menu-item>
-                    <el-menu-item index="/fukuan">已付款<div v-if="s2_cout>0" class="notice">{{s2_cout}}</div></el-menu-item>
-                    <el-menu-item index="/weishouhuo">未发货<div v-if="s3_cout>0" class="notice">{{s3_cout}}</div></el-menu-item>
-                    <el-menu-item index="/shouhuo">已发货<div v-if="s4_cout>0" class="notice">{{s4_cout}}</div></el-menu-item>
-                </el-submenu>
                 <el-menu-item index="/visit">就诊管理</el-menu-item>
                 <el-menu-item index="/user">用户管理</el-menu-item>
                 </el-menu>
@@ -52,6 +45,8 @@
 </template>
 
 <script>
+import {setCookie,getCookie,delCookie} from "../util/cookieUnit.js";
+  import g from "../globals/global.js";
 export default {
     data() {
         return {
@@ -96,21 +91,26 @@ export default {
         }
     },
     mounted() {
-        console.log("home")
-        var user = {
-            name:"fizzo",
-            avatar:"https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png",
-            doctor_no:"1001"
-        }
-        sessionStorage.setItem('user', JSON.stringify(user));
+        if(g.login){
+            console.log("home")
+            var user = {
+                name:"fizzo",
+                avatar:"https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png",
+                doctor_no:"1001"
+            }
+            sessionStorage.setItem('user', JSON.stringify(user));
 
-        var user = sessionStorage.getItem('user');
-        if (user) {
-            user = JSON.parse(user);
-            this.sysUserName = user.name || '';
-            this.sysUserAvatar = user.avatar || '';
-        }
+            var user = sessionStorage.getItem('user');
+            if (user) {
+                user = JSON.parse(user);
+                this.sysUserName = user.name || '';
+                this.sysUserAvatar = user.avatar || '';
+            }
 
+        }else{
+            this.$router.push({name:'login'})
+        }
+        
     }
 }
 </script>

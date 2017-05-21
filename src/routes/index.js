@@ -47,7 +47,9 @@ import visiter from '../views/visits/visiter.vue';
 import report from '../views/visits/report.vue';
 import user from '../views/users/user.vue';
 import test from '../views/test.vue';
+import NotFound from '../views/NotFound.vue';
 export default [
+  {path: '*', component: NotFound, name: 'notfound'},
   {
     path: '/',
     component: home,
@@ -60,10 +62,14 @@ export default [
         { path: '/report/:no', component: report,name:"客人报告"},
         { path: '/visiter/:no', component: visiter,name:"客人信息"},
         { path: '/user', component: user,name:"用户管理"},
-    ]
+    ],
+    redirect:to=>{
+      console.log('redirect:to')
+      return { name: 'login', params: { gs: 1 }}
+    }
   },
   {
-    path: '/login',
+    path: '/login/:gs',
     component: login,
     name:"login"
   },

@@ -4,5 +4,6 @@
 // 3.if you use import * as xx from thismoudele,will use all as one object name xx
 export default {
   r:{},
+  login:false,
   debugUrl:'http://192.168.18.165:8072/api/'
 }
