@@ -18,9 +18,9 @@
         </el-col>
         <el-col :span="24" class="main">
             <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
-                <el-menu theme="dark" router>
-                <el-menu-item index="1" :route="{path: '/home/'+gs+'/visit'}">就诊管理</el-menu-item>
-                <el-menu-item index="2" :route="{path: '/home/'+gs+'/user'}">用户管理</el-menu-item>
+                <el-menu default-active='1' theme="dark" router>
+                <el-menu-item index='1' :route="{path: '/home/'+gs+'/visit'}">就诊管理</el-menu-item>
+                <el-menu-item index='2' :route="{path: '/home/'+gs+'/user'}">用户管理</el-menu-item>
                 </el-menu>
             </aside>
             <section class="content-container">
@@ -68,13 +68,11 @@ export default {
             this.$confirm('确认退出吗?', '提示', {
                 //type: 'warning'
             }).then(() => {
-                sessionStorage.removeItem('user');
+                setCookie('user', null);
                 _this.$http.get(g.debugUrl+"signOut").then((res)=>{
-                    console.log("dkdkkdkdkjk")
                     if(res.body.d){
-                        // _this.$router.push('/login');
+                        _this.$router.push('/login/'+_this.$data.gs);
                     } else{
-                        console.log("dkdkkdkdkjk")
                     }   
                 },
                 (res)=>{
@@ -94,17 +92,17 @@ export default {
     mounted() {
         console.log("home")
         this.$data.gs = this.$route.params.gs
-        var user = {
-            name:"fizzo",
-            avatar:"https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png",
-            doctor_no:"1001"
-        }
-        sessionStorage.setItem('user', JSON.stringify(user));
+        // var user = {
+        //     name:"fizzo",
+        //     avatar:"https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png",
+        //     doctor_no:"1001"
+        // }
+        // sessionStorage.setItem('user', JSON.stringify(user));
 
-        var user = sessionStorage.getItem('user');
+        var user = getCookie('user');
         if (user) {
             user = JSON.parse(user);
-            this.sysUserName = user.name || '';
+            this.sysUserName = user.familyname || '';
             this.sysUserAvatar = user.avatar || '';
         }
     },

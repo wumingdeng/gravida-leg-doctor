@@ -51,11 +51,19 @@
             this.$http.post(g.debugUrl+"login",loginParams).then((res)=>{
               if(res.body.d){
                 // console.log(res.body.sid)
+                var user = res.body.d
                 console.log("login.vue:"+g.login)
                 g.login = true
-                setCookie('connect.sid',res.body.sid)
+
+                var user = {
+                    username:user.username,
+                    avatar:"https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png",
+                    familyname:user.familyname,
+                    weight:user.weight,
+                    doctor_no:"1001"
+                }
+                setCookie('user', JSON.stringify(user));
                 this.$router.push({name:'就诊列表'})
-                // console.log(g.login)
               } else{
                   console.log("dkdkkdkdkjk")
               }   

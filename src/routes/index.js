@@ -2,6 +2,7 @@
  * @file
  * Created by hanan on 16/10/15.
  */
+import {setCookie,getCookie,delCookie} from "../util/cookieUnit.js";
 import g from "../globals/global.js";
 import login from '../views/login.vue';
 import order from '../views/order.vue';
@@ -35,10 +36,10 @@ export default [
         window.scrollTo(0,0)
         var gs = to.params.gs
         console.log("beforeEnter")
-        console.log(g.login)
-        console.log(to.name)
+        var user = getCookie('user')
+        console.log(user)
         console.log("beforeEnter")
-        if(g.login){
+        if(user){
           next()
         }else if(gs=="fizzo" || gs=="yukiko"){
           next('/login/'+gs)
