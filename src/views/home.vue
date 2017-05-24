@@ -70,9 +70,12 @@ export default {
             }).then(() => {
                 setCookie('user', null);
                 _this.$http.get(g.debugUrl+"signOut").then((res)=>{
-                    if(res.body.d){
+                    if(res.body.ok == 1){
                         _this.$router.push('/login/'+_this.$data.gs);
                     } else{
+                        this.$alert('退出失败', '警告', {
+                            confirmButtonText: '确定'
+                        });
                     }   
                 },
                 (res)=>{

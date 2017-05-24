@@ -25,8 +25,8 @@
         gsStr:"第鬼医院",
         logining: false,
         ruleForm2: {
-          account: '000000',
-          checkPass: '000000'
+          account: '',
+          checkPass: ''
         },
         rules2: {
           account: [
@@ -49,14 +49,14 @@
             this.logining = true;
             var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
             this.$http.post(g.debugUrl+"login",loginParams).then((res)=>{
-              if(res.body.d){
-                // console.log(res.body.sid)
+              if(res.body.ok == 1){
                 var user = res.body.d
                 console.log("login.vue:"+g.login)
                 g.login = true
 
                 var user = {
                     username:user.username,
+                    password:user.password,
                     avatar:"https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png",
                     familyname:user.familyname,
                     weight:user.weight,
@@ -64,13 +64,15 @@
                 }
                 setCookie('user', JSON.stringify(user));
                 this.$router.push({name:'就诊列表'})
-              } else{
-                  console.log("dkdkkdkdkjk")
+              } else if(res.body.ok == 0){
+                this.$alert('登陆失败', '警告', {
+                  confirmButtonText: '确定'
+                });
               }   
-              this.$data.listLoading = false          
+              this.logining = false          
           },
           (res)=>{
-              this.$data.listLoading = false      
+              this.logining = false      
           })
           } else {
             console.log('error submit!!');
@@ -94,7 +96,14 @@
           this.$router.push({name:'notfound'})
           break;
       }
-
+      var user = getCookie('user');
+      if (user) {
+          user = JSON.parse(user);
+          if(user){
+            this.ruleForm2.account = user.username || '';
+            this.ruleForm2.checkPass = user.password || '';
+          }
+      }
     }
   }
 

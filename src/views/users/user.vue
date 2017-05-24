@@ -65,12 +65,11 @@
 					<el-input v-model="editForm.password"></el-input>
 				</el-form-item>
 				<el-form-item label="权限">
-                    <el-radio-group v-model="editForm.weight">
-						<el-radio class="radio" :label="0">普通医生</el-radio>
-						<el-radio class="radio" :label="1">主治医生</el-radio>
-                        <el-radio class="radio" :label="2">专家医师</el-radio>
-                        <el-radio class="radio" :label="3">主任医师</el-radio>
-					</el-radio-group>
+                    <el-checkbox-group v-model="editForm.weight">
+						<el-checkbox :label="0">用户管理</el-checkbox>
+						<el-checkbox :label="1">就诊管理</el-checkbox>
+                        <el-checkbox :label="2">医生管理</el-checkbox>
+					</el-checkbox-group>
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -91,13 +90,12 @@
 				<el-form-item label="密码" prop="password">
 					<el-input v-model="addForm.password"></el-input>
 				</el-form-item>
-				<el-form-item label="权限">
-                    <el-radio-group v-model="addForm.weight">
-						<el-radio class="radio" :label="0">普通医生</el-radio>
-						<el-radio class="radio" :label="1">主治医生</el-radio>
-                        <el-radio class="radio" :label="2">专家医师</el-radio>
-                        <el-radio class="radio" :label="3">主任医师</el-radio>
-					</el-radio-group>
+				<el-form-item label="权限" prop='weight'>
+                    <el-checkbox-group v-model="addForm.weight">
+						<el-checkbox label="0" name='weight'>医生管理</el-checkbox>
+						<el-checkbox label="1" name='weight'>就诊管理</el-checkbox>
+                        <el-checkbox label="2" name='weight'>用户管理</el-checkbox>
+					</el-checkbox-group>
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -130,6 +128,9 @@ export default {
             password: [
                 { required: true, message: '请输入密码', trigger: 'blur' }
             ],
+            weight: [
+                { type: 'array',required: true, message: '请至少选择一个权限', trigger: 'change' }
+            ],
             username: [
                 { required: true, message: '请输入用户名', trigger: 'blur' }
             ]
@@ -139,7 +140,7 @@ export default {
             id: 0,
             familyname: '',
             username: '',
-            weight: '',
+            weight: [],
             password: ''
         },
 
@@ -152,6 +153,9 @@ export default {
             password: [
                 { required: true, message: '请输入密码', trigger: 'blur' }
             ],
+            weight: [
+                { type: 'array',required: true, message: '请至少选择一个权限', trigger: 'change' }
+            ],
             username: [
                 { required: true, message: '请输入用户名', trigger: 'blur' }
             ]
@@ -160,7 +164,7 @@ export default {
         addForm: {
             familyname: '',
             username: '',
-            weight: '',
+            weight: [],
             password: ''
         },
         filters: {
@@ -241,7 +245,7 @@ export default {
         this.$data.addForm = {
             familyname: '',
             username: '',
-            weight: '',
+            weight: [],
             password: ''
         };
     },
