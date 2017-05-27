@@ -23,39 +23,37 @@ export default [
     path: '/home/:gs',
     component: home,
     children: [
-        // { path: '/', component: weifukuan,name:"未付款记录"},
-        // { path: '/fukuan', component: fukuan,name:"已付款记录"},
-        // { path: '/shouhuo', component: shouhuo,name:"已收货记录"},
-        // { path: '/weishouhuo', component: weishouhuo,name:"未收货记录"},
         { path: '/home/:gs/visit', component: visit,name:"就诊列表"},
         { path: '/home/:gs/report/:no', component: report,name:"客人报告"},
         { path: '/home/:gs/visiter/:no', component: visiter,name:"客人信息"},
         { path: '/home/:gs/user', component: user,name:"用户管理"},
     ],
     beforeEnter:(to,from,next)=>{
-        window.scrollTo(0,0)
         var gs = to.params.gs
-        console.log("beforeEnter")
         var user = getCookie('user')
-        console.log(user)
-        console.log("beforeEnter")
-        if(user){
-          next()
-        }else if(gs=="fizzo" || gs=="yukiko"){
-          next('/login/'+gs)
+        if(user==undefined || user==null|| user=='null'){
+            if(gs=="fizzo" || gs=="yukiko"){
+              console.log("返回登陆界面")
+              next('/login/'+gs)
+            }else{
+              next('/login/fizzo')
+            }
+        }else if(gs=="180" || gs=="yukiko"){
+            console.log('当前页面')
+            next()
         }else{
-          next('*')
-        }
+          next('/login/fizzo')
+        }        
     }
+  },
+  {
+    path: '/',
+    component: login,
+    name:"login"
   },
   {
     path: '/login/:gs',
     component: login,
     name:"login"
-  },
-   {
-    path: '/test',
-    component: test,
-    name:"test"
   }
 ];

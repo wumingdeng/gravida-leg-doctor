@@ -1,7 +1,7 @@
 <template>
 
   <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
-    <h3 class="title">系统登录:{{gsStr}}</h3>
+    <h3 class="title">{{gsStr}}</h3>
     <el-form-item prop="account">
       <el-input type="text" v-model="ruleForm2.account" auto-complete="off" placeholder="账号"></el-input>
     </el-form-item>
@@ -22,7 +22,7 @@
   export default {
     data() {
       return {
-        gsStr:"第鬼医院",
+        gsStr:"中国人民解放军第180医院",
         logining: false,
         ruleForm2: {
           account: '',
@@ -53,7 +53,6 @@
                 var user = res.body.d
                 console.log("login.vue:"+g.login)
                 g.login = true
-
                 var user = {
                     username:user.username,
                     password:user.password,
@@ -82,15 +81,16 @@
       }
     },
     mounted (){
+      this.$route.params.gs = "180"
       var gs = this.$route.params.gs
       var gsStr = this.$data.gsStr
       console.log("什么医院："+gs)
       switch(gs){
-        case "fizzo":
-          this.$data.gsStr = "fizzo 医院";
+        case "180":
+          this.$data.gsStr = "中国人民解放军第180医院";
           break;
         case "yukiko":
-          this.$data.gsStr="yukiko 医院";
+          this.$data.gsStr="yukiko医院";
           break;
         default:
           this.$router.push({name:'notfound'})

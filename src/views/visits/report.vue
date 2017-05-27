@@ -8,7 +8,6 @@
       </el-table-column>
       <el-table-column prop="gravida_no" label="就诊人员编号" style="width: 15%">
       </el-table-column>
-   
       </el-table-column>
       <el-table-column prop="leg_judge" label="足部判断" style="width: 50%">
       </el-table-column>
@@ -78,8 +77,8 @@ export default {
       getUsers(no){
           this.$data.listLoading = true
           this.$http.post(g.debugUrl+"getReportByNo",{no:no}).then((res)=>{
-            //   console.log(res.body.d)
-              this.$data.reportInfo.push(res.body.d) 
+              console.log(res.body.d)
+              this.$data.reportInfo = res.body.d
               this.$data.listLoading = false    
           },
           (res)=>{

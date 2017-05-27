@@ -46,15 +46,16 @@
 
 <script>
 import {setCookie,getCookie,delCookie} from "../util/cookieUnit.js";
-  import g from "../globals/global.js";
+import g from "../globals/global.js";
 export default {
     data() {
         return {
             gs:"",
-            sysName:'孕妇鞋',
+            sysName:'180医院',
             collapsed:false,
             sysUserName: '',
             sysUserAvatar: '',
+            doctor_no:1001,
             s1_cout:1,
             s2_cout:2,
             s3_cout:3,
@@ -105,8 +106,11 @@ export default {
         var user = getCookie('user');
         if (user) {
             user = JSON.parse(user);
-            this.sysUserName = user.familyname || '';
-            this.sysUserAvatar = user.avatar || '';
+            if(user){
+                this.sysUserName = user.familyname || '';
+                this.sysUserAvatar = user.avatar || '';
+                this.doctor_no = user.doctor_no
+            }
         }
     },
     beforeMount() {

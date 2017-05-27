@@ -12,21 +12,21 @@
     </div>
     <el-row type="flex" align="middle" :gutter="20">
       <el-table v-loading="listLoading" :data="tableData" style="width: 100%" @row-click="onRowClick">
-      <el-table-column prop="createdAt" :formatter="createdateformatter" label="就诊时间" style="width: 15%">
-      </el-table-column>
       <el-table-column prop="id" label="就诊号" style="width: 15%">
       </el-table-column>
-      <el-table-column prop="patient_no" label="就诊人员编号" style="width: 15%">
+      <el-table-column prop="createdAt" :formatter="createdateformatter" label="就诊时间" style="width: 15%">
       </el-table-column>
-      <el-table-column prop="doctor_no" label="医生编号" style="width: 15%">
+      <el-table-column prop="patient_no" label="就诊人员" style="width: 15%">
       </el-table-column>
-      <el-table-column prop="content" label="内容" style="width: 50%">
+      <el-table-column prop="gravida_week" label="孕周" style="width: 15%">
+      </el-table-column>
+      <el-table-column prop="content" label="检测内容" style="width: 50%">
       </el-table-column>
       <el-table-column label="操作" style="width: 5%">
         <template scope="scope">
           <el-button
             size="small"
-            @click="open2(scope.$index, scope.row)">报告</el-button>
+            @click="open2(scope.$index, scope.row)">查看报告</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -48,6 +48,7 @@
 <script>
 import api from "../../util/api.js";
 import g from "../../globals/global.js";
+import {setCookie,getCookie,delCookie} from "../../util/cookieUnit.js";
 export default {
   data () {
     return {
@@ -124,10 +125,12 @@ export default {
     
    mounted (){
       console.log("mounted")
-      var user = sessionStorage.getItem('user');
+      var user = getCookie('user');
         if (user) {
             user = JSON.parse(user);
-            this.doctor_no = user.doctor_no || '';
+            if(user){
+                this.doctor_no = user.doctor_no
+            }
         }
        this.findByPage()
    },

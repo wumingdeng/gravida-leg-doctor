@@ -18,15 +18,15 @@ Vue.http.options.credentials = true;
 
 // 创建一个路由对象用于管理页面的路由
 const router = new VueRouter({
-  mode: 'history',
+  base:'/gd/',
+  mode:'history',
   routes: routes,
 });
 
-// router.beforeEach((to,from,next)=>{
-//   window.scrollTo(0,0)
-//   console.log("1234")
-//   next()
-// })
+router.beforeEach((to,from,next)=>{
+  console.log(to.pa)
+  next()
+})
 
 new Vue({
   el: '#app',

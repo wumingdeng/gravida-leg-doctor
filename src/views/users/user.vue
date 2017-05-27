@@ -29,18 +29,16 @@
       <el-table-column label="操作">
         <template scope="scope">
           <el-button
-            v-if="scope.row.weight > 0" 
             size="small"
             @click="onEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button
-            v-if="scope.row.weight > 1" 
             size="small"
             @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
   </el-row>
-      <el-row type="flex" justify="end" style="padding:20px 0; ">
+      <el-row type="flex" justify="end" style="padding:20px 0">
         <el-pagination
           :current-page="curPage"
           :page-sizes="[10, 20, 30, 40]"
@@ -66,9 +64,9 @@
 				</el-form-item>
 				<el-form-item label="权限">
                     <el-checkbox-group v-model="editForm.weight">
-						<el-checkbox :label="0">用户管理</el-checkbox>
-						<el-checkbox :label="1">就诊管理</el-checkbox>
-                        <el-checkbox :label="2">医生管理</el-checkbox>
+						<el-checkbox label="0" name='weight'>医生管理</el-checkbox>
+						<el-checkbox label="1" name='weight'>就诊管理</el-checkbox>
+                        <el-checkbox label="2" name='weight'>用户管理</el-checkbox>
 					</el-checkbox-group>
 				</el-form-item>
 			</el-form>
@@ -175,6 +173,7 @@ export default {
   methods: {
       onEdit(idx,row){
           this.$data.editFormVisible = true
+          row.weight = row.weight.toString().split(',')
 		  this.$data.editForm = Object.assign({}, row);
           this.curRow = row
       },
@@ -226,12 +225,15 @@ export default {
                 this.$confirm('确认提交吗？', '提示', {}).then(() => {
                     this.addLoading = true;
                     this.$http.post(g.debugUrl+"saveAdmin",this.$data.addForm).then((res)=>{
-                        console.log(res.body.d)
+                        if(res.body.ok==1){
+                            this.$message({
+                                message: '提交成功',
+                                type: 'success'
+                            });
+                        }else{
+                            this.$message.error('提交失败');
+                        }
                         this.addLoading = false;
-                        this.$message({
-                            message: '提交成功',
-                            type: 'success'
-                        });
                         this.$refs['addForm'].resetFields();
                         this.addFormVisible = false;
                         this.findByPage()
@@ -251,17 +253,11 @@ export default {
     },
       statusFor(row,column){
            var value = row.weight
-           switch(value){
-              case 0:
-                  return "普通医生";
-              case 1:
-                  return "医师";
-              case 2:
-                  return "主治医生";
-              case 3:
-                  return "主任医师";
-              default:
-                  return ""
+           console.log(value)
+           if(value.length>1){
+                return "管理员";
+           }else{
+                return "普通用户";
            }
       },
       createdateformatter(row, column){

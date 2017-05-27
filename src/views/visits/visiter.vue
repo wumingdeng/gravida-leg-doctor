@@ -58,8 +58,8 @@ export default {
           this.$data.listLoading = true
           this.$http.post(g.debugUrl+"getReportByNo",{no:no}).then((res)=>{
             //   console.log(res.body.d)
-              this.$data.reportInfo.push(res.body.d) 
-              this.$data.listLoading = false    
+            this.$data.reportInfo = res.body.d
+            this.$data.listLoading = false    
           },
           (res)=>{
               this.$data.listLoading = false   
