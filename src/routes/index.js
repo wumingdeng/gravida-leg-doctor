@@ -17,6 +17,7 @@ import report from '../views/visits/report.vue';
 import user from '../views/users/user.vue';
 import test from '../views/test.vue';
 import NotFound from '../views/NotFound.vue';
+import {checkHospital} from "../util/hospitalUntil.js";
 export default [
   {path: '*', component: NotFound, name: 'notfound'},
   {
@@ -49,7 +50,15 @@ export default [
   {
     path: '/',
     component: login,
-    name:"login"
+    name:"login",
+    beforeEnter:(to,from,next)=>{
+        var gs = to.query.gs
+        if(!checkHospital(gs)){
+          next('*')
+        }else{
+          next()
+        }
+    }
   },
   {
     path: '/login/:gs',

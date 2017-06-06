@@ -23,11 +23,6 @@ const router = new VueRouter({
   routes: routes,
 });
 
-router.beforeEach((to,from,next)=>{
-  console.log(to.pa)
-  next()
-})
-
 new Vue({
   el: '#app',
   router,	

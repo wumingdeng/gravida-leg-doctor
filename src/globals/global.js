@@ -5,6 +5,7 @@
 export default {
   r:{},
   login:false,
-  // debugUrl:'http://192.168.18.165:8101/api/'
-  debugUrl:'http://121.40.254.174:8101/api/'
+  gs:'',
+  debugUrl:'http://192.168.18.165:8101/api/',
+  // debugUrl:'http://121.40.254.174:8101/api/'
 }

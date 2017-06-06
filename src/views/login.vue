@@ -19,6 +19,7 @@
   import api from "../util/api.js";
   import {setCookie,getCookie,delCookie} from "../util/cookieUnit.js";
   import g from "../globals/global.js";
+  import Hospital_data from '/Users/Fizzo/Documents/workspace-js/gravida_server/hospital.json'
   export default {
     data() {
       return {
@@ -81,22 +82,12 @@
       }
     },
     mounted (){
-      this.$route.params.gs = "180"
-      var gs = this.$route.params.gs
-      var gsStr = this.$data.gsStr
-      console.log("什么医院："+gs)
-      switch(gs){
-        case "180":
-          this.$data.gsStr = "中国人民解放军第180医院";
-          break;
-        case "yukiko":
-          this.$data.gsStr="yukiko医院";
-          break;
-        default:
-          this.$router.push({name:'notfound'})
-          break;
-      }
-      var user = getCookie('user');
+      // var expInfo = api.getOrderTracesByJson("YTO",12345678)
+      // console.log(expInfo)
+      var gs = this.$route.query.gs
+      this.$data.gsStr = gs
+      this.$route.params.gs = gs
+      var user = getCookie('user')
       if (user) {
           user = JSON.parse(user);
           if(user){
@@ -104,6 +95,7 @@
             this.ruleForm2.checkPass = user.password || '';
           }
       }
+
     }
   }
 
