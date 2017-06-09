@@ -1,19 +1,23 @@
 <template>
 <el-row type="flex" align="middle" :gutter="20">
     <el-table v-loading="listLoading" :data="reportInfo" style="width: 100%">
-      <el-table-column prop="createdAt" :formatter="createdateformatter" label="就诊时间" style="width: 15%">
+      <el-table-column prop="date_server" :formatter="createdateformatter" label="服务时间" >
       </el-table-column>
-      <el-table-column prop="id" label="报告号" style="width: 15%">
+      <el-table-column prop="date_yunfu" :formatter="createdateformatter" label="怀孕时间" >
       </el-table-column>
-      <el-table-column prop="gravida_no" label="就诊人员编号" style="width: 15%">
+      <el-table-column prop="id" label="报告号" >
       </el-table-column>
-   
+      <el-table-column prop="name" label="用户姓名" >
       </el-table-column>
-      <el-table-column prop="leg_judge" label="足部判断" style="width: 50%">
+      <el-table-column prop="hospital_name" label="医院名称" >
       </el-table-column>
-      <el-table-column prop="leg_health" label="足部保健知识" style="width: 50%">
+      <el-table-column prop="doctor_name" label="医生姓名" >
       </el-table-column>
-      <el-table-column prop="pro_style" :formatter="proFormatter" label="建议鞋型" style="width: 50%">
+      <el-table-column prop="leg_judge" label="足部判断" >
+      </el-table-column>
+      <el-table-column prop="leg_health" label="足部保健知识" >
+      </el-table-column>
+      <el-table-column prop="pro_style" :formatter="proFormatter" label="建议鞋型" >
       </el-table-column>
     </el-table>
 </el-row>

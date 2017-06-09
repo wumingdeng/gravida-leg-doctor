@@ -55,7 +55,7 @@ export default {
             collapsed:false,
             sysUserName: '',
             sysUserAvatar: '',
-            doctor_no:1001,
+            doctor_no:'',
             s1_cout:1,
             s2_cout:2,
             s3_cout:3,

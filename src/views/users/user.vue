@@ -289,6 +289,7 @@ export default {
           this.findByPage()
       },
       findByPage(){
+          console.log('user find')
           this.$data.listLoading = true
           var postData = {
               offset:(this.$data.curPage-1)*this.$data.pageSize,
@@ -324,11 +325,9 @@ export default {
     },
     
    mounted (){
-      console.log("fukuan_mounted")
        this.findByPage()
    },
    created (){
-       console.log("fukuan_create")
    }
 }
 </script>

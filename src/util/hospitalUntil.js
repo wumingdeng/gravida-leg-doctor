@@ -7,6 +7,7 @@ export function checkHospital(tarName){
         console.log(hospital.host)
         if(hospital.host == tarName){
             g.gsStr = hospital.name
+            g.h_no = h_id
             console.log("jiang jiang")
             return true
         }

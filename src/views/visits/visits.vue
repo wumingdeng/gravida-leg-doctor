@@ -14,13 +14,17 @@
       <el-table v-loading="listLoading" :data="tableData" style="width: 100%" @row-click="onRowClick">
       <el-table-column prop="id" label="就诊号" style="width: 15%">
       </el-table-column>
-      <el-table-column prop="createdAt" :formatter="createdateformatter" label="就诊时间" style="width: 15%">
+      <el-table-column prop="date_server"  label="就诊时间">
       </el-table-column>
-      <el-table-column prop="patient_no" label="就诊人员" style="width: 15%">
+      <el-table-column prop="date_yunfu"  label="怀孕时间">
       </el-table-column>
-      <el-table-column prop="gravida_week" label="孕周" style="width: 15%">
+      <el-table-column prop="name" label="就诊人姓名">
       </el-table-column>
-      <el-table-column prop="content" label="检测内容" style="width: 50%">
+      <el-table-column prop="age" label="年龄">
+      </el-table-column>
+      <el-table-column prop="height" label="身高">
+      </el-table-column>
+      <el-table-column prop="weight" label="体重">
       </el-table-column>
       <el-table-column label="操作" style="width: 5%">
         <template scope="scope">
@@ -65,7 +69,7 @@ export default {
   },
   methods: {
       onRowClick(row, event, column){
-        var no = row.patient_no
+        var no = row.open_id
         this.$router.push({ name: '客人信息', params: { no: no }})
       },
       createdateformatter(row, column){
@@ -81,19 +85,26 @@ export default {
          this.findByPage()
       },
       handle_setCurPage(currentPage){
+          if(this.$data.curPage == currentPage) return
           this.$data.curPage = currentPage
           this.findByPage()
       },
       findByPage(){
           this.$data.listLoading = true
           var postData = {
-              offset:(this.$data.curPage-1)*this.$data.pageSize,
-              limit:this.$data.curPage*this.$data.pageSize,
-              dn:this.doctor_no
+              p:this.$data.curPage,
+              s:0,
+              did:this.doctor_no
           }
+          console.log("findByPage")
           this.$http.post(g.debugUrl+"getVisits",postData).then((res)=>{
-              this.$data.total = res.body.d.count;
-              this.$data.tableData = res.body.d.rows;  
+              if(res.body.error){
+
+              }else{
+                console.log(res.body.r.count)
+                this.$data.total = res.body.r.count;
+                this.$data.tableData = res.body.r.rows;  
+              }
               this.$data.listLoading = false    
           },
           (res)=>{
@@ -118,8 +129,10 @@ export default {
           })
       },
       open2(idx,row){
-          var no = row.patient_no
-          this.$router.push({ name: '客人报告', params: { no: no }})
+          var no = row.mac_id
+          var openid = row.open_id
+          console.log(no)
+          this.$router.push({ name: '客人报告', params: { no: no ,open_id:openid}})
       }
     },
     

@@ -2,8 +2,7 @@
 <div>
 <el-row type="flex" align="middle" :gutter="20">
     <el-table v-loading="listLoading" :data="reportInfo" style="width: 100%">
-      <el-table-column prop="createdAt" :formatter="createdateformatter" label="就诊时间" style="width: 15%">
-      </el-table-column>
+      
       <el-table-column prop="id" label="报告号" style="width: 15%">
       </el-table-column>
       <el-table-column prop="gravida_no" label="就诊人员编号" style="width: 15%">
@@ -74,11 +73,15 @@ export default {
               return ""
           }
       },
-      getUsers(no){
+      getReport(no,open_id){
           this.$data.listLoading = true
-          this.$http.post(g.debugUrl+"getReportByNo",{no:no}).then((res)=>{
-              console.log(res.body.d)
-              this.$data.reportInfo = res.body.d
+          this.$http.post(g.debugUrl+"getReportByNo",{rid:no,openid:open_id}).then((res)=>{
+              if(res.body.error){
+
+              }else{
+                  console.log(res.body.data)
+                this.$data.reportInfo = res.body.data
+              }
               this.$data.listLoading = false    
           },
           (res)=>{
@@ -88,11 +91,10 @@ export default {
     },
     
    mounted (){
-      var patient_no = this.$route.params.no
+      var mac_id = this.$route.params.no
+      var open_id = this.$route.params.open_id
       var gs = this.$route.params.gs
-      console.log(patient_no)
-      console.log(gs)
-      this.getUsers(patient_no)
+      this.getReport(mac_id,open_id)
    },
    created (){
        console.log("create")

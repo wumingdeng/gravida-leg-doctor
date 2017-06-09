@@ -48,11 +48,10 @@
         this.$refs.ruleForm2.validate((valid) => {
           if (valid) {
             this.logining = true;
-            var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
+            var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass ,h_no:g.h_no};
             this.$http.post(g.debugUrl+"login",loginParams).then((res)=>{
               if(res.body.ok == 1){
                 var user = res.body.d
-                console.log("login.vue:"+g.login)
                 g.login = true
                 var user = {
                     username:user.username,
@@ -60,8 +59,9 @@
                     avatar:"https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png",
                     familyname:user.familyname,
                     weight:user.weight,
-                    doctor_no:"1001"
+                    doctor_no:user.doctor_no
                 }
+                g.d_no = user.doctor_no
                 setCookie('user', JSON.stringify(user));
                 this.$router.push({name:'就诊列表'})
               } else if(res.body.ok == 0){
@@ -72,6 +72,9 @@
               this.logining = false          
           },
           (res)=>{
+              this.$alert('服务器繁忙', '异常', {
+                  confirmButtonText: '确定'
+              });
               this.logining = false      
           })
           } else {
@@ -82,11 +85,10 @@
       }
     },
     mounted (){
-      // var expInfo = api.getOrderTracesByJson("YTO",12345678)
-      // console.log(expInfo)
       var gs = this.$route.query.gs
-      this.$data.gsStr = gs
+      this.$data.gsStr = g.gs
       this.$route.params.gs = gs
+      console.log(gs)
       var user = getCookie('user')
       if (user) {
           user = JSON.parse(user);

@@ -6,6 +6,10 @@ export default {
   r:{},
   login:false,
   gs:'',
+  h_no:'',
+  d_no:'',
   debugUrl:'http://192.168.18.165:8101/api/',
+  pregnantAdd:'http://180yxd.sujudao.com:8097/api/'
+  // pregnantAdd:'http://192.168.18.111:8097/api/'
   // debugUrl:'http://121.40.254.174:8101/api/'
 }

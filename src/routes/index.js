@@ -39,7 +39,7 @@ export default [
             }else{
               next('/login/fizzo')
             }
-        }else if(gs=="180" || gs=="yukiko"){
+        }else if(checkHospital(gs)){
             console.log('当前页面')
             next()
         }else{
@@ -53,7 +53,9 @@ export default [
     name:"login",
     beforeEnter:(to,from,next)=>{
         var gs = to.query.gs
+        console.log("sdddddddddddd:"+gs)
         if(!checkHospital(gs)){
+          console.log("sdddddddddddd")
           next('*')
         }else{
           next()
