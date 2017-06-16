@@ -38,7 +38,7 @@
       <el-row type="flex" justify="end" style="padding:20px 0; ">
         <el-pagination
           :current-page="curPage"
-          :page-sizes="[10, 20, 30, 40]"
+          :page-sizes="[10]"
           :page-size="pageSize"
           layout="sizes, prev, pager, next"
           :total="total"
@@ -81,8 +81,8 @@ export default {
           return data+" "+time
       },
       handle_setPageSize(pageSize){
-         this.$data.pageSize = pageSize
-         this.findByPage()
+        //  this.$data.pageSize = pageSize
+        //  this.findByPage()
       },
       handle_setCurPage(currentPage){
           if(this.$data.curPage == currentPage) return

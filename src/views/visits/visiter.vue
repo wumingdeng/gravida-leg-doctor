@@ -1,4 +1,5 @@
 <template>
+<section>
 <el-row type="flex" align="middle" :gutter="20">
     <el-table v-loading="listLoading" :data="reportInfo" style="width: 100%">
       <el-table-column prop="date_server" :formatter="createdateformatter" label="服务时间" >
@@ -21,6 +22,18 @@
       </el-table-column>
     </el-table>
 </el-row>
+<el-row type="flex" justify="end" style="padding:20px 0; ">
+        <el-pagination
+          :current-page="curPage"
+          :page-sizes="[10]"
+          :page-size="pageSize"
+          layout="sizes, prev, pager, next"
+          :total="total"
+          @size-change="handle_setPageSize"
+          @current-change="handle_setCurPage">
+        </el-pagination>
+      </el-row>
+      </section>
 </template>
 
 <script>
@@ -29,12 +42,24 @@ export default {
   data () {
     return {
         listLoading:false,
+        curpage:1,
+        pageSize:10,
+        total:0,
         reportInfo:[]
     }
   },
   methods: {
+      handle_setPageSize(pageSize){
+        //  this.$data.pageSize = pageSize
+        //  this.findByPage()
+      },
+      handle_setCurPage(currentPage){
+          if(this.$data.curPage == currentPage) return
+          this.$data.curPage = currentPage
+          this.findByPage()
+      },
       createdateformatter(row, column){
-          var value = row.createdAt
+          var value = row.createdAt 
           var data = value.split('T')[0]
           var time = value.split('T')[1]
           time = time.split('.')[0]
@@ -60,9 +85,14 @@ export default {
       },
       getUsers(no){
           this.$data.listLoading = true
-          this.$http.post(g.debugUrl+"getReportByNo",{no:no}).then((res)=>{
-            //   console.log(res.body.d)
-            this.$data.reportInfo = res.body.d
+          this.$http.post(g.debugUrl+"getUserReport",{no:no}).then((res)=>{
+            if(res.body.error){
+
+            }else{
+                console.log(res.body.r.count)
+                this.$data.total = res.body.r.count;
+                this.$data.reportInfo = res.body.r.rows;  
+            }
             this.$data.listLoading = false    
           },
           (res)=>{
